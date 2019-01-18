@@ -109,54 +109,59 @@ for trade_date in list(df.index)[lookback+1:]:
 
     print('xposition, yposition:       ', xposition, yposition)
 
-    if zscore > 0. and yposition > 0.:
-        ytarget = 0.
-        xtarget = 0.
-     
-        df_target_position.loc[trade_date, ysym] = ytarget
-        df_target_position.loc[trade_date, xsym] = xtarget
-        
-        df_current_position.loc[trade_date, ysym] = ytarget
-        df_current_position.loc[trade_date, xsym] = xtarget
-        
-#        import pdb; pdb.set_trace()
-        continue
-
-    if zscore < 0. and yposition < 0.:
-        
-        ytarget = 0.
-        xtarget = 0.
-
-        df_target_position.loc[trade_date, ysym] = ytarget
-        
-        print(df_target_position.loc[trade_date])
-        
-#        import pdb; pdb.set_trace()
-
-        df_target_position.loc[trade_date, xsym] = xtarget
-        
-        df_current_position.loc[trade_date, ysym] = ytarget
-        df_current_position.loc[trade_date, xsym] = xtarget
-        
-        continue
+#    if zscore > 0. and yposition > 0.:
+#        ytarget = 0.
+#        xtarget = 0.
+#
+#        df_target_position.loc[trade_date, ysym] = ytarget
+#        df_target_position.loc[trade_date, xsym] = xtarget
+#
+#        df_current_position.loc[trade_date, ysym] = ytarget
+#        df_current_position.loc[trade_date, xsym] = xtarget
+#
+##        import pdb; pdb.set_trace()
+#        continue
+#
+#    if zscore < 0. and yposition < 0.:
+#
+#        ytarget = 0.
+#        xtarget = 0.
+#
+#        df_target_position.loc[trade_date, ysym] = ytarget
+#
+#        print(df_target_position.loc[trade_date])
+#
+##        import pdb; pdb.set_trace()
+#
+#        df_target_position.loc[trade_date, xsym] = xtarget
+#
+#        df_current_position.loc[trade_date, ysym] = ytarget
+#        df_current_position.loc[trade_date, xsym] = xtarget
+#
+#        continue
 
 
     if zscore < - 1. and yposition <= 0.:
+#    if zscore < -1.:
         ytarget = total_amount / y_current_price
         xtarget = - hedge_ratio * ytarget
-
+        
+        df_target_position.loc[trade_date, 'zscore'] = zscore
         df_target_position.loc[trade_date, ysym] = ytarget
         df_target_position.loc[trade_date, xsym] = xtarget
         
         df_current_position.loc[trade_date, ysym] = ytarget
         df_current_position.loc[trade_date, xsym] = xtarget
+        
         
         continue
 
     if zscore > 1. and yposition >= 0.:
+#    if zscore > 1.:
         ytarget = - total_amount / y_current_price
         xtarget = - hedge_ratio * ytarget
-
+        
+        df_target_position.loc[trade_date, 'zscore'] = zscore
         df_target_position.loc[trade_date, ysym] = ytarget
         df_target_position.loc[trade_date, xsym] = xtarget
 
@@ -169,10 +174,10 @@ for trade_date in list(df.index)[lookback+1:]:
 #print(df_target_position)
 
 
-#writer = pd.ExcelWriter(mypath + '/target.xlsx', engine = 'openpyxl')
-#df_target_position.to_excel(writer, 'Sheet1')
-#writer.save()
-#writer.close()
+writer = pd.ExcelWriter(mypath + '/target.xlsx', engine = 'openpyxl')
+df_target_position.to_excel(writer, 'Sheet1')
+writer.save()
+writer.close()
 
 import pdb; pdb.set_trace()
 
