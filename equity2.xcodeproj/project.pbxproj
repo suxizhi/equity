@@ -6,10 +6,17 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXFileReference section */
+		941F7EA121E8902900474073 /* nasdaq.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = nasdaq.py; sourceTree = "<group>"; };
+		941F7EA221E8903500474073 /* reg.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = reg.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		941F7E9621E8902400474073 = {
 			isa = PBXGroup;
 			children = (
+				941F7EA121E8902900474073 /* nasdaq.py */,
+				941F7EA221E8903500474073 /* reg.py */,
 			);
 			sourceTree = "<group>";
 		};
