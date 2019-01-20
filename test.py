@@ -7,4 +7,4 @@ def test():
     a += 1
 
 test()
-print(a)
+print('some changes')
