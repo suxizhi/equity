@@ -9,57 +9,10 @@ from ib.opt import ibConnection, message
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
-
+from hist_data import get_historical_data
 
 # Set up IB message handler to dump to pandas dataframe
 
-
-def get_historical_data(sym):
-    # define historical data handler for IB - this will populate our pandas data frame
-    #    print(df)
-    df = pd.DataFrame( columns=['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'OpenInterest'])
-    s = pd.Series()
-    
-    def my_error_handler(msg):
-        print(msg)
-    
-    
-    def historical_data_handler(msg):
-        #        global df
-        #    print (msg.reqId, msg.date, msg.open, msg.close, msg.high, msg.low)
-        if ('finished' in str(msg.date)) == False:
-            s = ([datetime.strptime(msg.date, '%Y%m%d'), msg.open, msg.high, msg.low, msg.close, msg.volume, 0])
-#            print(s)
-            df.loc[len(df)] = s
-        
-        else:
-            df.set_index('Date',inplace=True)
-
-    def makeStkContract(sym, exchange='SMART', currency='USD'): # Leave the exchange blank
-        newContract = Contract()
-        newContract.m_symbol = sym
-        newContract.m_secType = 'STK'
-        newContract.m_exchange = exchange
-        newContract.m_currency = currency
-        
-        return newContract
-
-    con = ibConnection(host='127.0.0.1',port=7497,clientId=77)
-    con.registerAll(my_error_handler)
-    con.unregister(my_error_handler, (message.historicalData, ))
-
-    con.register(historical_data_handler, message.historicalData)
-    con.connect()
-    
-    contract = makeStkContract(sym=sym, exchange='ARCA')
-    
-    con.reqHistoricalData(0, contract, '', '3 M', '1 day', 'TRADES', 1, 2)
-    sleep(3)
-    print('---------------')
-    print(df.tail(2))
-    con.disconnect()
-    con.close()
-    return df
 
 def get_hedge_ratio(X, Y):
     '''Y = a * X + b + noise. return a'''
