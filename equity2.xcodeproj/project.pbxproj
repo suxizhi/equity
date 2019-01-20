@@ -11,6 +11,7 @@
 		941F7EA221E8903500474073 /* reg.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = reg.py; sourceTree = "<group>"; };
 		941F7EA321F1BA9400474073 /* pairs.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = pairs.py; sourceTree = "<group>"; };
 		941F7EA421F1BA9900474073 /* test.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = test.py; sourceTree = "<group>"; };
+		941F7EA521F4627800474073 /* stk_hist.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = stk_hist.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -21,6 +22,7 @@
 				941F7EA221E8903500474073 /* reg.py */,
 				941F7EA321F1BA9400474073 /* pairs.py */,
 				941F7EA421F1BA9900474073 /* test.py */,
+				941F7EA521F4627800474073 /* stk_hist.py */,
 			);
 			sourceTree = "<group>";
 		};

@@ -107,7 +107,8 @@ for trade_date in list(df.index)[lookback+1:]:
 
     xposition, yposition = get_previous_position(trade_date)
 
-    print('xposition, yposition:       ', xposition, yposition)
+#    print('trade date:     ', trade_date)
+#    print('xposition, yposition:    ', xposition, yposition)
 
 #    if zscore > 0. and yposition > 0.:
 #        ytarget = 0.
@@ -141,8 +142,8 @@ for trade_date in list(df.index)[lookback+1:]:
 #        continue
 
 
-    if zscore < - 1. and yposition <= 0.:
-#    if zscore < -1.:
+#    if zscore < - 1. and yposition <= 0.:
+    if zscore < -1.:
         ytarget = total_amount / y_current_price
         xtarget = - hedge_ratio * ytarget
         
@@ -156,8 +157,8 @@ for trade_date in list(df.index)[lookback+1:]:
         
         continue
 
-    if zscore > 1. and yposition >= 0.:
-#    if zscore > 1.:
+#    if zscore > 1. and yposition >= 0.:
+    if zscore > 1.:
         ytarget = - total_amount / y_current_price
         xtarget = - hedge_ratio * ytarget
         
