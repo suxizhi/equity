@@ -21,69 +21,12 @@ mypath = '/Users/SXZ/equity'
 # Set up IB message handler to dump to pandas dataframe
 
 
-def get_hedge_ratio(X, Y):
-    '''Y = a * X + b + noise. return a'''
-    X = sm.add_constant(X)
-    #    print('X shape is       ', X.shape)
-    #    print('Y shape is       ', Y.shape)
-    model = sm.OLS(Y, X).fit()
-    ratio = model.params[1]
-    print('ratio is:      ', ratio)
-
-#    if ratio >= 2.5:
-#        return 'Hedging ratio too high.'
-#    else:
-    return ratio
-
-
-def get_zscore(pair):
-    
-    lookback = 30
-    zwindow = 20
-    
-    xsym = pair[0]
-    ysym = pair[1]
-    
-    pairname = xsym + '-' + ysym
-    
-    for trade_date in list(dfPrice.index)[lookback+1:]:
-        
-        idx = dfPrice.index.get_loc(trade_date)
-        data = dfPrice.iloc[idx - lookback : idx]
-        
-        X = data[xsym]
-        Y = data[ysym]
-        
-        try:
-            hedge_ratio = np.float(get_hedge_ratio(X, Y))
-        
-        except ValueError as e:
-            #        log.debug(e)
-            print('Exception')
-            continue
-
-        x_current_price = dfPrice.loc[trade_date, xsym]
-        y_current_price = dfPrice.loc[trade_date, ysym]
-        print(y_current_price, hedge_ratio, x_current_price)
-        
-        spread = y_current_price - hedge_ratio * x_current_price
-        
-        dfSpread.loc[trade_date, 'Spread'] = spread
-        
-        if len(dfSpread) <= 1:
-            continue
-        
-        zscore = (spread - dfSpread.iloc[-zwindow:].Spread.mean()) / dfSpread.iloc[-zwindow:].Spread.std()
-
-        dfZscore.loc[trade_date, pairname] = zscore
-        print('zscore is', zscore)
-
 
 #symbols = ['AEP', 'DTE', 'XEL']
 #pairs = [('AEP', 'DTE'), ('AEP', 'XEL')]
 
 # List of stock symbols.
-symbols = ['ETR', 'AEP', 'FHN', 'EXC', 'ATO', 'WM', 'DTE', 'WAL', 'AEE', 'FNB', 'WTFC', 'EWBC', 'HOMB', 'PNFP', 'NI', 'LPT', 'ROIC', 'HBAN', 'ONB', 'OGS', 'ECL', 'HWC', 'VLY', 'STL', 'RF', 'AWK', 'TCF', 'PNM', 'GBCI', 'BXS', 'ACC', 'WPC', 'WEC', 'DUK', 'ZION', 'MS', 'CNP', 'UMPQ', 'HON', 'FITB', 'RPAI', 'EQR', 'STI', 'CMA', 'ARE', 'ELS', 'FULT', 'AJG', 'UDR', 'UBSI', 'SUI', 'BRX', 'XEL', 'SR', 'RSG', 'NJR', 'PNW', 'NTRS', 'SNV', 'BOKF', 'PLD', 'IBKC', 'UMBF', 'MBFI', 'ATR', 'PNC', 'CFR', 'MMC']
+#symbols = ['ETR', 'AEP', 'FHN', 'EXC', 'ATO', 'WM', 'DTE', 'WAL', 'AEE', 'FNB', 'WTFC', 'EWBC', 'HOMB', 'PNFP', 'NI', 'LPT', 'ROIC', 'HBAN', 'ONB', 'OGS', 'ECL', 'HWC', 'VLY', 'STL', 'RF', 'AWK', 'TCF', 'PNM', 'GBCI', 'BXS', 'ACC', 'WPC', 'WEC', 'DUK', 'ZION', 'MS', 'CNP', 'UMPQ', 'HON', 'FITB', 'RPAI', 'EQR', 'STI', 'CMA', 'ARE', 'ELS', 'FULT', 'AJG', 'UDR', 'UBSI', 'SUI', 'BRX', 'XEL', 'SR', 'RSG', 'NJR', 'PNW', 'NTRS', 'SNV', 'BOKF', 'PLD', 'IBKC', 'UMBF', 'MBFI', 'ATR', 'PNC', 'CFR', 'MMC']
 
 
 pairs = [('AEP', 'DTE'), ('AEP', 'XEL'), ('ATO', 'EXC'), ('ATO', 'AEE'), ('DTE', 'XEL'), ('DUK', 'PNW'), ('ETR', 'WEC'), ('ETR', 'EXC'), ('ETR', 'AWK'), ('NI', 'XEL'), ('NI', 'CNP'), ('WEC', 'AEE'), ('WEC', 'AWK'), ('AJG', 'WM'), ('ECL', 'ATR'), ('ECL', 'RSG'), ('MMC', 'ATR'), ('MMC', 'WM'), ('MMC', 'HON'), ('BXS', 'WTFC'), ('BXS', 'WAL'), ('FNB', 'PNFP'), ('FNB', 'FHN'), ('FULT', 'GBCI'), ('FULT', 'HWC'), ('FULT', 'ONB'), ('FULT', 'TCF'), ('FULT', 'UBSI'), ('FULT', 'VLY'), ('FULT', 'UMBF'), ('FULT', 'WTFC'), ('FULT', 'UMPQ'), ('FULT', 'STL'), ('FULT', 'IBKC'), ('FULT', 'MBFI'), ('FULT', 'PNFP'), ('FULT', 'FHN'), ('FULT', 'WAL'), ('FULT', 'HOMB'), ('VLY', 'UMBF'), ('WTFC', 'UMPQ'), ('STL', 'PNFP'), ('PNFP', 'FHN'), ('BOKF', 'NTRS'), ('CFR', 'NTRS'), ('CMA', 'NTRS'), ('CMA', 'RF'), ('FITB', 'PNC'), ('FITB', 'MS'), ('HBAN', 'STI'), ('HBAN', 'RF'), ('NTRS', 'STI'), ('NTRS', 'ZION'), ('NTRS', 'RF'), ('PNC', 'MS'), ('SNV', 'EWBC'), ('STI', 'RF'), ('UDR', 'EQR'), ('ELS', 'SUI'), ('ELS', 'LPT'), ('LPT', 'WPC'), ('ARE', 'PLD'), ('ARE', 'ACC'), ('SR', 'PNM'), ('NJR', 'OGS'), ('ROIC', 'BRX'), ('RPAI', 'BRX')]
@@ -106,7 +49,7 @@ symbols = list(set(symbols))
 sym = symbols[0]
 
 contract = Stock(sym, 'SMART', 'USD')
-bars = ib.reqHistoricalData(contract, endDateTime='', durationStr='1 W', barSizeSetting='1 day', whatToShow='TRADES', useRTH=True)
+bars = ib.reqHistoricalData(contract, endDateTime='', durationStr='3 M', barSizeSetting='1 day', whatToShow='TRADES', useRTH=True)
 
 df = util.df(bars)
 
@@ -120,7 +63,7 @@ for sym in symbols:
 
     bars = ib.reqHistoricalData(contract, endDateTime='', durationStr='3 M', barSizeSetting='1 day', whatToShow='TRADES', useRTH=True)
 
-    sleep(0.5)
+    sleep(0.1)
     print('---------------')
 
     df = util.df(bars).set_index('date')
@@ -136,23 +79,7 @@ writer = pd.ExcelWriter(mypath + '/stk{}.xlsx'.format(date_today), engine='openp
 dfPrice.to_excel(writer, sheet_name='Sheet1')
 writer.save()
 
-
-dfPrice = pd.read_excel(mypath + '/stk{}.xlsx'.format(date_today)).set_index('date')
-
-dfSpread = pd.DataFrame(index=dfPrice.index)
-
-dfZscore = pd.DataFrame(index=dfPrice.index)
-
-for pair in pairs:
-    get_zscore(pair)
-
-
-writer = pd.ExcelWriter(mypath + '/zscore{}.xlsx'.format(date_today), engine='openpyxl')
-dfZscore.to_excel(writer, sheet_name='Sheet1')
-writer.save()
-
 writer.close()
-
 
 
 import pdb; pdb.set_trace()
