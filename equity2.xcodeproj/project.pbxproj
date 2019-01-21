@@ -14,6 +14,8 @@
 		941F7EA521F4627800474073 /* stk_hist.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = stk_hist.py; sourceTree = "<group>"; };
 		944B516E21F4A4AF005D2DFD /* repl_nq.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = repl_nq.py; sourceTree = "<group>"; };
 		946DBD5E21F5A3A8002CA871 /* hist_data.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = hist_data.py; sourceTree = "<group>"; };
+		946DBD5F21F5BA56002CA871 /* hedge.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = hedge.py; sourceTree = "<group>"; };
+		946DBD6021F5C16A002CA871 /* get_info.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = get_info.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -23,9 +25,11 @@
 				941F7EA121E8902900474073 /* nasdaq.py */,
 				941F7EA221E8903500474073 /* reg.py */,
 				944B516E21F4A4AF005D2DFD /* repl_nq.py */,
-				941F7EA321F1BA9400474073 /* pairs.py */,
 				941F7EA521F4627800474073 /* stk_hist.py */,
+				946DBD6021F5C16A002CA871 /* get_info.py */,
+				946DBD5F21F5BA56002CA871 /* hedge.py */,
 				941F7EA421F1BA9900474073 /* test.py */,
+				941F7EA321F1BA9400474073 /* pairs.py */,
 				946DBD5E21F5A3A8002CA871 /* hist_data.py */,
 			);
 			sourceTree = "<group>";
