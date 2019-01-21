@@ -1,10 +1,8 @@
 import numpy as np
 
-a = 0
-def test():
-    if 3 > 2:
-        return
-    a += 1
 
-test()
-print('some changes')
+# Convert contract details into dictionary
+{key: getattr(cds[0].contract, key) for key in Contract.defaults}
+
+# Convert more contract details into dictionary and get company name
+{key: getattr(cds[0], key) for key in ContractDetails.defaults}['longName']
