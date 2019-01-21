@@ -39,7 +39,8 @@ res = reg.coef_ / sum(reg.coef_)
 code_list = ['MSFT', 'AAPL', 'FB', 'INTC', 'CSCO',
              'CMCSA', 'PEP', 'NFLX', 'AMGN', 'ADBE',
              'PYPL', 'AVGO', 'TXN', 'COST', 'GILD',
-             'NVDA', 'SBUX', 'BKNG', 'WBA', 'CHTR', 'BIIB']
+             'NVDA', 'SBUX', 'WBA', 'CHTR', 'BIIB',
+             'CHTR', 'MDLZ', 'ISRG']
 
 ind_select = np.argwhere(res > 0.01)
 
@@ -75,7 +76,4 @@ plt.show()
 
 import pdb; pdb.set_trace()
 
-# {'MSFT': 0.1, 'AAPL': 0.1, 'FB': 0.07, 'INTC': 0.04, 'CSCO': 0.07, 'CMCSA': 0.08, 'PEP': 0.02, 'NFLX': 0.09, 'AMGN': 0.07, 'ADBE': 0.03, 'PYPL': 0.04, 'AVGO': 0.05, 'TXN': 0.05, 'COST': 0.02, 'GILD': 0.05, 'NVDA': 0.07, 'SBUX': 0.03, 'BKNG': 0.02, 'WBA': 0.03}
-
-# longer period result
-# {'MSFT': 0.11, 'AAPL': 0.11, 'FB': 0.08, 'INTC': 0.04, 'CSCO': 0.07, 'CMCSA': 0.06, 'PEP': 0.02, 'NFLX': 0.09, 'AMGN': 0.06, 'ADBE': 0.03, 'PYPL': 0.04, 'AVGO': 0.04, 'TXN': 0.01, 'COST': 0.04, 'GILD': 0.03, 'NVDA': 0.04, 'SBUX': 0.06, 'BKNG': 0.02, 'WBA': 0.02, 'CHTR': 0.03}
+#{'MSFT': 0.11, 'AAPL': 0.11, 'FB': 0.08, 'INTC': 0.04, 'CSCO': 0.08, 'CMCSA': 0.05, 'PEP': 0.02, 'NFLX': 0.07, 'AMGN': 0.06, 'ADBE': 0.03, 'PYPL': 0.04, 'AVGO': 0.04, 'TXN': 0.01, 'COST': 0.03, 'GILD': 0.03, 'NVDA': 0.04, 'SBUX': 0.01, 'WBA': 0.02, 'CHTR': 0.04, 'BIIB': 0.05, 'MDLZ': 0.04}

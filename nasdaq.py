@@ -15,7 +15,8 @@ cursor = db.cursor()
 code_list = ['MSFT', 'AAPL', 'FB', 'INTC', 'CSCO',
              'CMCSA', 'PEP', 'NFLX', 'AMGN', 'ADBE',
              'PYPL', 'AVGO', 'TXN', 'COST', 'GILD',
-             'NVDA', 'SBUX', 'BKNG', 'WBA', 'CHTR', 'BIIB']
+             'NVDA', 'SBUX', 'WBA', 'CHTR', 'BIIB',
+             'MDLZ', 'ISRG', 'CELG']
 
 
 sql = "select * from MSFT"
@@ -30,7 +31,7 @@ for code in code_list:
     df[code] = pd.read_sql(sql, db).set_index('Date')['Adj_Close']
 
 
-writer = pd.ExcelWriter(mypath + '/data{}.xlsx'.format(date.today().strftime('%m%d%Y')), engine = 'openpyxl')
+writer = pd.ExcelWriter(mypath + '/data1.xlsx', engine = 'openpyxl')
 
 df.to_excel(writer, 'Sheet1')
 writer.save()
