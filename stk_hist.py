@@ -4,12 +4,19 @@ import backtrader as bt
 from datetime import datetime
 import pytz, tzlocal
 from time import sleep, strftime, localtime
-from ib.ext.Contract import Contract
-from ib.opt import ibConnection, message
+#from ib.ext.Contract import Contract
+#from ib.opt import ibConnection, message
+from ib_insync import *
+
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
-from hist_data import get_historical_data
+#from hist_data import get_historical_data
+
+
+date_today = datetime.strftime(datetime.today(), '%Y%m%d')
+
+mypath = '/Users/SXZ/equity'
 
 # Set up IB message handler to dump to pandas dataframe
 
@@ -69,7 +76,7 @@ def get_zscore(pair):
         zscore = (spread - dfSpread.iloc[-zwindow:].Spread.mean()) / dfSpread.iloc[-zwindow:].Spread.std()
 
         dfZscore.loc[trade_date, pairname] = zscore
-
+        print('zscore is', zscore)
 
 
 #symbols = ['AEP', 'DTE', 'XEL']
@@ -89,26 +96,48 @@ for pair in pairs:
     symbols.append(xsym)
     symbols.append(ysym)
 
+
+
+ib = IB()
+ib.connect('127.0.0.1', 4002, clientId=77)
+
 symbols = list(set(symbols))
 
 sym = symbols[0]
-dfPrice = pd.DataFrame(index=get_historical_data(sym).index)
+
+contract = Stock(sym, 'SMART', 'USD')
+bars = ib.reqHistoricalData(contract, endDateTime='', durationStr='1 W', barSizeSetting='1 day', whatToShow='TRADES', useRTH=True)
+
+df = util.df(bars)
+
+dfPrice = pd.DataFrame(index=df.date)
 
 for sym in symbols:
-    dfPrice[sym] = get_historical_data(sym)['Close']
+
+    print(sym)
+
+    contract = Stock(sym, 'SMART', 'USD')
+
+    bars = ib.reqHistoricalData(contract, endDateTime='', durationStr='3 M', barSizeSetting='1 day', whatToShow='TRADES', useRTH=True)
+
+    sleep(0.5)
+    print('---------------')
+
+    df = util.df(bars).set_index('date')
+
+    dfPrice[sym] = df['close']
+
+ib.disconnect()
 
 print(dfPrice.head())
 
-date_today = datetime.strftime(datetime.today(), '%Y%m%d')
 
-mypath = '/Users/SXZ/equity'
 writer = pd.ExcelWriter(mypath + '/stk{}.xlsx'.format(date_today), engine='openpyxl')
 dfPrice.to_excel(writer, sheet_name='Sheet1')
 writer.save()
 
 
-
-dfPrice = pd.read_excel(mypath + '/stk{}.xlsx'.format(date_today))
+dfPrice = pd.read_excel(mypath + '/stk{}.xlsx'.format(date_today)).set_index('date')
 
 dfSpread = pd.DataFrame(index=dfPrice.index)
 
@@ -123,6 +152,8 @@ dfZscore.to_excel(writer, sheet_name='Sheet1')
 writer.save()
 
 writer.close()
+
+
 
 import pdb; pdb.set_trace()
 

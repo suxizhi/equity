@@ -1,3 +1,5 @@
+# Can be discarded.
+
 import os.path  # To manage paths
 import sys  # To find out the script name (in argv[0])
 import backtrader as bt
@@ -56,3 +58,8 @@ def get_historical_data(sym, period='3 M'):
     con.disconnect()
     con.close()
     return df
+
+
+#get_historical_data('AAPL')
+
+#bars = ib.reqHistoricalData(contract, endDateTime='', durationStr='1 W', barSizeSetting='1 day', whatToShow='TRADES', useRTH=True)
